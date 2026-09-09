@@ -110,7 +110,7 @@ Here are practical examples to demonstrate the API flow and error handling.
    
 ---
 
-- ## 📡 API Endpoints
+## 📡 API Endpoints
 
 | Method | Endpoint | Description | Auth |
 | :--- | :--- | :--- | :--- |
@@ -123,7 +123,7 @@ Here are practical examples to demonstrate the API flow and error handling.
 
 ---
 
-- ## 🔬 Live Examples (cURL & JSON)
+## 🔬 Live Examples (cURL & JSON)
   Here are practical examples to demonstrate the API flow and error handling.
 
   ### 1. Fetch All Rooms
@@ -259,7 +259,7 @@ Here are practical examples to demonstrate the API flow and error handling.
 
 ---
 
-- ## 📂 Project Structure
+## 📂 Project Structure
   This clean architecture follows the **Separation of Concerns** principle:
 
   ```bash
@@ -284,17 +284,17 @@ Here are practical examples to demonstrate the API flow and error handling.
 
 ---
 
-- ## 🧪 Running Unit Tests
-To verify the core booking logic works perfectly:
-``` bash
-dotnet test
-```
-The suite includes tests for successful bookings, conflict scenarios, and duplicate request prevention.
+## 🧪 Running Unit Tests
+  To verify the core booking logic works perfectly:
+  ``` bash
+  dotnet test
+  ```
+  The suite includes tests for successful bookings, conflict scenarios, and duplicate request prevention.
 
 
 ---
 
-- ## 🤝 Contributing
+## 🤝 Contributing
 
-This is a demo project for learning and showcasing purposes. Suggestions and feedback are highly appreciated!
+  This is a demo project for learning and showcasing purposes. Suggestions and feedback are highly appreciated!
 
