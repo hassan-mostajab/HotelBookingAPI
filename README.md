@@ -79,7 +79,7 @@ curl -X GET "https://localhost:5001/api/rooms"
    git clone https://github.com/yourusername/hotel-booking-api.git
    cd hotel-booking-api
    ```
-   
+   <br/>
 2. **Configure the Database**  
    Update the connection string in `appsettings.json`:
    ```json
@@ -87,21 +87,21 @@ curl -X GET "https://localhost:5001/api/rooms"
      "DefaultConnection": "Server=localhost;Database=HotelBookingDB;User=root;Password=your_password;"
    }
    ```
-   
+   <br/>
 3. **Apply Migrations & Seed Data**
    ```bash
    dotnet ef database update
    ```
    (This will create the schema and insert 3 sample rooms: Single, Double, and Suite.)
 
-
+   <br/>
 4. **Run the Application**
    ```bash
    dotnet run
    ```
    The API will be available at `https://localhost:5001` (or `http://localhost:5000`).
 
-   
+   <br/>
 5. **Explore Swagger**
    Navigate to `https://localhost:5001/swagger` to test endpoints interactively.
 
