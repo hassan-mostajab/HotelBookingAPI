@@ -85,8 +85,10 @@ Here are practical examples to demonstrate the API flow and error handling.
 ```bash
 curl -X GET "https://localhost:5001/api/rooms"
 ### Installation & Setup
+```
 
 1. **Clone the repository**
    ```bash
    git clone https://github.com/yourusername/hotel-booking-api.git
    cd hotel-booking-api
+   ```
