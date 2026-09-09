@@ -124,13 +124,13 @@ Here are practical examples to demonstrate the API flow and error handling.
 - ## 🔬 Live Examples (cURL & JSON)
   Here are practical examples to demonstrate the API flow and error handling.
 
-   ### 1. Fetch All Rooms
-      **Request:**
+  ### 1. Fetch All Rooms
+  **Request:**
       ```bash
       curl -X GET "https://localhost:5001/api/rooms"
       ```
       
-      **Response (200 OK):**
+  **Response (200 OK):**
       ```json
       [
         {
@@ -154,9 +154,9 @@ Here are practical examples to demonstrate the API flow and error handling.
       \
   ### 2. Create a Booking (with Idempotency)
       
-      Notice the `Idempotency-Key` header. If you send the same key again, the server returns the previous result without creating a duplicate.
+  Notice the `Idempotency-Key` header. If you send the same key again, the server returns the previous result without creating a duplicate.
       
-      **Request:**
+  **Request:**
       ```bash
       
       curl -X POST "https://localhost:5001/api/bookings" \
@@ -172,7 +172,7 @@ Here are practical examples to demonstrate the API flow and error handling.
         }'
       ```
       
-      **Response (201 Created):**
+  **Response (201 Created):**
       ```json
       
       {
@@ -192,9 +192,9 @@ Here are practical examples to demonstrate the API flow and error handling.
       \
   ### 3. Process Payment for the Booking
       
-      If you accidentally send this request twice with the same `transaction-id`, it will not charge the user again.
+  If you accidentally send this request twice with the same `transaction-id`, it will not charge the user again.
       
-      **Request:**
+  **Request:**
       ```bash
       curl -X POST "https://localhost:5001/api/payments" \
         -H "Content-Type: application/json" \
@@ -207,7 +207,7 @@ Here are practical examples to demonstrate the API flow and error handling.
         }'
       ```
       
-      **Response (200 OK):**
+  **Response (200 OK):**
       ```json
       {
         "id": 1,
@@ -222,9 +222,9 @@ Here are practical examples to demonstrate the API flow and error handling.
       \
   ### 4. Conflict! (Handling Double-Booking)
       
-      If another user tries to book the same room simultaneously, the API detects the conflict via the `RowVersion` concurrency check and returns a 409 Conflict.
+  If another user tries to book the same room simultaneously, the API detects the conflict via the `RowVersion` concurrency check and returns a 409 Conflict.
       
-      **Request** (Attempting to book Room #101 again):
+  **Request** (Attempting to book Room #101 again):
       ```bash
       curl -X POST "https://localhost:5001/api/bookings" \
         -H "Idempotency-Key: booking-002-abc" \
@@ -239,7 +239,7 @@ Here are practical examples to demonstrate the API flow and error handling.
         }'
         ```
       \
-      **Response (409 Conflict):**
+  **Response (409 Conflict):**
       ```json
       {
         "error": "DbUpdateConcurrencyException",
