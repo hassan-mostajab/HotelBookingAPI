@@ -92,3 +92,10 @@ curl -X GET "https://localhost:5001/api/rooms"
    git clone https://github.com/yourusername/hotel-booking-api.git
    cd hotel-booking-api
    ```
+2. **Configure the Database**  
+   Update the connection string in `appsettings.json`:
+   ```json
+   "ConnectionStrings": {
+     "DefaultConnection": "Server=localhost;Database=HotelBookingDB;User=root;Password=your_password;"
+   }
+   ```
