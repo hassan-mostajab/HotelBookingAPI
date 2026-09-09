@@ -79,6 +79,7 @@ curl -X GET "https://localhost:5001/api/rooms"
    git clone https://github.com/yourusername/hotel-booking-api.git
    cd hotel-booking-api
    ```
+   
 2. **Configure the Database**  
    Update the connection string in `appsettings.json`:
    ```json
@@ -86,20 +87,24 @@ curl -X GET "https://localhost:5001/api/rooms"
      "DefaultConnection": "Server=localhost;Database=HotelBookingDB;User=root;Password=your_password;"
    }
    ```
+   
 3. **Apply Migrations & Seed Data**
    ```bash
    dotnet ef database update
    ```
    (This will create the schema and insert 3 sample rooms: Single, Double, and Suite.)
 
+
 4. **Run the Application**
    ```bash
    dotnet run
    ```
    The API will be available at `https://localhost:5001` (or `http://localhost:5000`).
+
    
 5. **Explore Swagger**
    Navigate to `https://localhost:5001/swagger` to test endpoints interactively.
+
    
 ---
 
@@ -113,6 +118,7 @@ curl -X GET "https://localhost:5001/api/rooms"
 | `DELETE` | `/api/bookings/{id}` | Cancels an unconfirmed booking. | None |
 | `POST` | `/api/payments` | Processes payment for a booking. *Requires Idempotency-Key.* | None |
 
+
 ---
 
 - ## 🔬 Live Examples (cURL & JSON)
@@ -123,23 +129,23 @@ curl -X GET "https://localhost:5001/api/rooms"
 - ## 📂 Project Structure
   This clean architecture follows the **Separation of Concerns** principle:
 
-  ```text
-HotelBookingAPI/
-├── Controllers/        # HTTP Layer (Request/Response)
-│   ├── RoomsController
-│   ├── BookingsController
-│   └── PaymentsController
-├── Services/           # Business Logic Layer
-│   ├── BookingService
-│   ├── PaymentService
-│   └── IdempotencyService
-├── Repositories/       # Data Access Layer (Abstractions & Implementations)
-├── Models/             # Database Entities (Rooms, Bookings, Payments)
-├── DTOs/               # Data Transfer Objects (Request/Response contracts)
-├── Middleware/         # Global Exception Handling
-├── Data/               # DbContext and EF Core Configurations
-├── Extensions/         # Service Registration Helpers
-└── UnitTests/          # xUnit + Moq Test Cases
+  ```bash
+      HotelBookingAPI/
+      ├── Controllers/        # HTTP Layer (Request/Response)
+      │   ├── RoomsController
+      │   ├── BookingsController
+      │   └── PaymentsController
+      ├── Services/           # Business Logic Layer
+      │   ├── BookingService
+      │   ├── PaymentService
+      │   └── IdempotencyService
+      ├── Repositories/       # Data Access Layer (Abstractions & Implementations)
+      ├── Models/             # Database Entities (Rooms, Bookings, Payments)
+      ├── DTOs/               # Data Transfer Objects (Request/Response contracts)
+      ├── Middleware/         # Global Exception Handling
+      ├── Data/               # DbContext and EF Core Configurations
+      ├── Extensions/         # Service Registration Helpers
+      └── UnitTests/          # xUnit + Moq Test Cases
   ```
 
 
