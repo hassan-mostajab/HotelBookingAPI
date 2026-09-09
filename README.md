@@ -155,13 +155,14 @@ Here are practical examples to demonstrate the API flow and error handling.
         }
       ]
    ```
-      \
+\
   ### 2. Create a Booking (with Idempotency)
       
   Notice the `Idempotency-Key` header. If you send the same key again, the server returns the previous result without creating a duplicate.
       
   **Request:**
-      ```bash
+  
+   ```bash
       
       curl -X POST "https://localhost:5001/api/bookings" \
         -H "Idempotency-Key: booking-001-xyz" \
@@ -174,10 +175,10 @@ Here are practical examples to demonstrate the API flow and error handling.
           "checkInDate": "2026-09-15T14:00:00",
           "checkOutDate": "2026-09-17T11:00:00"
         }'
-      ```
+   ```
       
   **Response (201 Created):**
-      ```json
+   ```json
       
       {
         "id": 1,
@@ -192,14 +193,14 @@ Here are practical examples to demonstrate the API flow and error handling.
         "createdAt": "2026-09-09T10:30:00.123Z",
         "idempotencyKey": "booking-001-xyz"
       }
-      ```
-      \
+   ```
+\
   ### 3. Process Payment for the Booking
       
   If you accidentally send this request twice with the same `transaction-id`, it will not charge the user again.
       
   **Request:**
-      ```bash
+   ```bash
       curl -X POST "https://localhost:5001/api/payments" \
         -H "Content-Type: application/json" \
         -d '{
@@ -209,10 +210,10 @@ Here are practical examples to demonstrate the API flow and error handling.
           "paymentMethod": "CreditCard",
           "transactionId": "txn-998877"
         }'
-      ```
+   ```
       
   **Response (200 OK):**
-      ```json
+   ```json
       {
         "id": 1,
         "bookingId": 1,
@@ -222,14 +223,14 @@ Here are practical examples to demonstrate the API flow and error handling.
         "transactionId": "txn-998877",
         "paymentDate": "2026-09-09T10:35:00.456Z"
       }
-      ```
-      \
+   ```
+\
   ### 4. Conflict! (Handling Double-Booking)
       
   If another user tries to book the same room simultaneously, the API detects the conflict via the `RowVersion` concurrency check and returns a 409 Conflict.
       
   **Request** (Attempting to book Room #101 again):
-      ```bash
+   ```bash
       curl -X POST "https://localhost:5001/api/bookings" \
         -H "Idempotency-Key: booking-002-abc" \
         -H "Content-Type: application/json" \
@@ -241,16 +242,16 @@ Here are practical examples to demonstrate the API flow and error handling.
           "checkInDate": "2026-09-15T14:00:00",
           "checkOutDate": "2026-09-17T11:00:00"
         }'
-        ```
-      \
+   ```
+\
   **Response (409 Conflict):**
-      ```json
+   ```json
       {
         "error": "DbUpdateConcurrencyException",
-        "message": "اتاق توسط کاربر دیگری در حال رزرو است. لطفاً دوباره تلاش کنید.",
+        "message": "The room is being booked by another user. Please try again.",
         "stackTrace": null
       }
-      ```
+   ```
 
 ---
 
