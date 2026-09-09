@@ -129,13 +129,13 @@ Here are practical examples to demonstrate the API flow and error handling.
   ### 1. Fetch All Rooms
   **Request:**
   
-      ```bash
+   ```bash
       curl -X GET "https://localhost:5001/api/rooms"
-      ```
+   ```
       
   **Response (200 OK):**
   
-      ```json
+   ```json
       [
         {
           "id": 1,
@@ -154,7 +154,7 @@ Here are practical examples to demonstrate the API flow and error handling.
           "isAvailable": true
         }
       ]
-      ```
+   ```
       \
   ### 2. Create a Booking (with Idempotency)
       
