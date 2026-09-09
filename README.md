@@ -155,7 +155,7 @@ Here are practical examples to demonstrate the API flow and error handling.
         }
       ]
    ```
-\
+<br/>
   ### 2. Create a Booking (with Idempotency)
       
   Notice the `Idempotency-Key` header. If you send the same key again, the server returns the previous result without creating a duplicate.
@@ -194,7 +194,7 @@ Here are practical examples to demonstrate the API flow and error handling.
         "idempotencyKey": "booking-001-xyz"
       }
    ```
-\
+<br/>
   ### 3. Process Payment for the Booking
       
   If you accidentally send this request twice with the same `transaction-id`, it will not charge the user again.
@@ -224,7 +224,7 @@ Here are practical examples to demonstrate the API flow and error handling.
         "paymentDate": "2026-09-09T10:35:00.456Z"
       }
    ```
-\
+<br/>
   ### 4. Conflict! (Handling Double-Booking)
       
   If another user tries to book the same room simultaneously, the API detects the conflict via the `RowVersion` concurrency check and returns a 409 Conflict.
@@ -243,7 +243,7 @@ Here are practical examples to demonstrate the API flow and error handling.
           "checkOutDate": "2026-09-17T11:00:00"
         }'
    ```
-\
+<br/>
   **Response (409 Conflict):**
    ```json
       {
