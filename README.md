@@ -61,6 +61,29 @@ The core challenge in hotel booking is **preventing double-booking** when two us
 - [.NET 8 SDK](https://dotnet.microsoft.com/en-us/download/dotnet/8.0)
 - [MySQL Server](https://www.mysql.com/downloads/) (Local or Docker)
 
+
+---
+
+- ## 📡 API Endpoints
+
+| Method | Endpoint | Description | Auth |
+| :--- | :--- | :--- | :--- |
+| `GET` | `/api/rooms` | Retrieves all available hotel rooms. | None |
+| `POST` | `/api/bookings` | Creates a new booking. *Requires Idempotency-Key header.* | None |
+| `GET` | `/api/bookings/{id}` | Fetches a specific booking by ID. | None |
+| `DELETE` | `/api/bookings/{id}` | Cancels an unconfirmed booking. | None |
+| `POST` | `/api/payments` | Processes payment for a booking. *Requires Idempotency-Key.* | None |
+
+## 🔬 Live Examples (cURL & JSON)
+
+Here are practical examples to demonstrate the API flow and error handling.
+
+---
+
+### 1. Fetch All Rooms
+**Request:**
+```bash
+curl -X GET "https://localhost:5001/api/rooms"
 ### Installation & Setup
 
 1. **Clone the repository**
