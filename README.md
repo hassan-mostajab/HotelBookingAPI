@@ -128,11 +128,13 @@ Here are practical examples to demonstrate the API flow and error handling.
 
   ### 1. Fetch All Rooms
   **Request:**
+  
       ```bash
       curl -X GET "https://localhost:5001/api/rooms"
       ```
       
   **Response (200 OK):**
+  
       ```json
       [
         {
