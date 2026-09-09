@@ -61,32 +61,19 @@ The core challenge in hotel booking is **preventing double-booking** when two us
 - [.NET 8 SDK](https://dotnet.microsoft.com/en-us/download/dotnet/8.0)
 - [MySQL Server](https://www.mysql.com/downloads/) (Local or Docker)
 
-
 ---
-
-- ## 📡 API Endpoints
-
-| Method | Endpoint | Description | Auth |
-| :--- | :--- | :--- | :--- |
-| `GET` | `/api/rooms` | Retrieves all available hotel rooms. | None |
-| `POST` | `/api/bookings` | Creates a new booking. *Requires Idempotency-Key header.* | None |
-| `GET` | `/api/bookings/{id}` | Fetches a specific booking by ID. | None |
-| `DELETE` | `/api/bookings/{id}` | Cancels an unconfirmed booking. | None |
-| `POST` | `/api/payments` | Processes payment for a booking. *Requires Idempotency-Key.* | None |
 
 ## 🔬 Live Examples (cURL & JSON)
 
 Here are practical examples to demonstrate the API flow and error handling.
 
----
-
 ### 1. Fetch All Rooms
 **Request:**
 ```bash
 curl -X GET "https://localhost:5001/api/rooms"
-### Installation & Setup
 ```
 
+### Installation & Setup
 1. **Clone the repository**
    ```bash
    git clone https://github.com/yourusername/hotel-booking-api.git
@@ -99,3 +86,76 @@ curl -X GET "https://localhost:5001/api/rooms"
      "DefaultConnection": "Server=localhost;Database=HotelBookingDB;User=root;Password=your_password;"
    }
    ```
+3. **Apply Migrations & Seed Data**
+   ```bash
+   dotnet ef database update
+   ```
+   (This will create the schema and insert 3 sample rooms: Single, Double, and Suite.)
+
+4. **Run the Application**
+   ```bash
+   dotnet run
+   ```
+   The API will be available at `https://localhost:5001` (or `http://localhost:5000`).
+   
+5. **Explore Swagger**
+   Navigate to `https://localhost:5001/swagger` to test endpoints interactively.
+   
+---
+
+- ## 📡 API Endpoints
+
+| Method | Endpoint | Description | Auth |
+| :--- | :--- | :--- | :--- |
+| `GET` | `/api/rooms` | Retrieves all available hotel rooms. | None |
+| `POST` | `/api/bookings` | Creates a new booking. *Requires Idempotency-Key header.* | None |
+| `GET` | `/api/bookings/{id}` | Fetches a specific booking by ID. | None |
+| `DELETE` | `/api/bookings/{id}` | Cancels an unconfirmed booking. | None |
+| `POST` | `/api/payments` | Processes payment for a booking. *Requires Idempotency-Key.* | None |
+
+---
+
+- ## 🔬 Live Examples (cURL & JSON)
+  Here are practical examples to demonstrate the API flow and error handling.
+
+---
+
+- ## 📂 Project Structure
+  This clean architecture follows the **Separation of Concerns** principle:
+
+  ```text
+HotelBookingAPI/
+├── Controllers/        # HTTP Layer (Request/Response)
+│   ├── RoomsController
+│   ├── BookingsController
+│   └── PaymentsController
+├── Services/           # Business Logic Layer
+│   ├── BookingService
+│   ├── PaymentService
+│   └── IdempotencyService
+├── Repositories/       # Data Access Layer (Abstractions & Implementations)
+├── Models/             # Database Entities (Rooms, Bookings, Payments)
+├── DTOs/               # Data Transfer Objects (Request/Response contracts)
+├── Middleware/         # Global Exception Handling
+├── Data/               # DbContext and EF Core Configurations
+├── Extensions/         # Service Registration Helpers
+└── UnitTests/          # xUnit + Moq Test Cases
+  ```
+
+
+---
+
+- ## 🧪 Running Unit Tests
+To verify the core booking logic works perfectly:
+``` bash
+dotnet test
+```
+The suite includes tests for successful bookings, conflict scenarios, and duplicate request prevention.
+
+
+---
+
+- ## 🤝 Contributing
+
+This is a demo project for learning and showcasing purposes. Suggestions and feedback are highly appreciated!
+
