@@ -16,7 +16,7 @@
 - [API Endpoints](#-api-endpoints)
 - [Live Examples](#-live-examples-curl--json)
 - [Project Structure](#-project-structure)
-- [Running Tests](#-running-tests)
+- [Running Tests](#-Running-Unit-Tests)
 
 ---
 
@@ -73,7 +73,7 @@ Here are practical examples to demonstrate the API flow and error handling.
 curl -X GET "https://localhost:5001/api/rooms"
 ```
 
-### Installation & Setup
+### 2. Installation & Setup
 1. **Clone the repository**
    ```bash
    git clone https://github.com/yourusername/hotel-booking-api.git
@@ -123,6 +123,130 @@ curl -X GET "https://localhost:5001/api/rooms"
 
 - ## 🔬 Live Examples (cURL & JSON)
   Here are practical examples to demonstrate the API flow and error handling.
+
+### 1. Fetch All Rooms
+**Request:**
+```bash
+curl -X GET "https://localhost:5001/api/rooms"
+```
+
+**Response (200 OK):**
+```json
+[
+  {
+    "id": 1,
+    "roomNumber": "101",
+    "type": "Single",
+    "pricePerNight": 50.00,
+    "capacity": 1,
+    "isAvailable": true
+  },
+  {
+    "id": 2,
+    "roomNumber": "102",
+    "type": "Double",
+    "pricePerNight": 80.00,
+    "capacity": 2,
+    "isAvailable": true
+  }
+]
+```
+<br/>
+### 2. Create a Booking (with Idempotency)
+
+Notice the `Idempotency-Key` header. If you send the same key again, the server returns the previous result without creating a duplicate.
+
+**Request:**
+```bash
+
+curl -X POST "https://localhost:5001/api/bookings" \
+  -H "Idempotency-Key: booking-001-xyz" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "roomId": 1,
+    "customerName": "John Doe",
+    "customerEmail": "john@example.com",
+    "customerPhone": "+1234567890",
+    "checkInDate": "2026-09-15T14:00:00",
+    "checkOutDate": "2026-09-17T11:00:00"
+  }'
+```
+
+**Response (201 Created):**
+```json
+
+{
+  "id": 1,
+  "roomId": 1,
+  "roomNumber": "101",
+  "customerName": "John Doe",
+  "customerEmail": "john@example.com",
+  "checkInDate": "2026-09-15T14:00:00",
+  "checkOutDate": "2026-09-17T11:00:00",
+  "totalPrice": 100.00,
+  "isConfirmed": false,
+  "createdAt": "2026-09-09T10:30:00.123Z",
+  "idempotencyKey": "booking-001-xyz"
+}
+```
+<br/>
+### 3. Process Payment for the Booking
+
+If you accidentally send this request twice with the same `transaction-id`, it will not charge the user again.
+
+**Request:**
+```bash
+curl -X POST "https://localhost:5001/api/payments" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "bookingId": 1,
+    "amount": 100.00,
+    "currency": "USD",
+    "paymentMethod": "CreditCard",
+    "transactionId": "txn-998877"
+  }'
+```
+
+**Response (200 OK):**
+```json
+{
+  "id": 1,
+  "bookingId": 1,
+  "amount": 100.00,
+  "currency": "USD",
+  "status": "Completed",
+  "transactionId": "txn-998877",
+  "paymentDate": "2026-09-09T10:35:00.456Z"
+}
+```
+\
+### 4. Conflict! (Handling Double-Booking)
+
+If another user tries to book the same room simultaneously, the API detects the conflict via the `RowVersion` concurrency check and returns a 409 Conflict.
+
+**Request** (Attempting to book Room #101 again):
+```bash
+curl -X POST "https://localhost:5001/api/bookings" \
+  -H "Idempotency-Key: booking-002-abc" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "roomId": 1,
+    "customerName": "Jane Smith",
+    "customerEmail": "jane@example.com",
+    "customerPhone": "+0987654321",
+    "checkInDate": "2026-09-15T14:00:00",
+    "checkOutDate": "2026-09-17T11:00:00"
+  }'
+  ```
+\
+**Response (409 Conflict):**
+```json
+{
+  "error": "DbUpdateConcurrencyException",
+  "message": "اتاق توسط کاربر دیگری در حال رزرو است. لطفاً دوباره تلاش کنید.",
+  "stackTrace": null
+}
+```
 
 ---
 
